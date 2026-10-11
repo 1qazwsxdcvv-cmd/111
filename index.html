@@ -2,21 +2,53 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>가상 쇼핑몰 테스트</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가상 쇼핑몰 실습 사이트</title>
+    <!-- 구글 태그 관리자 (GTM) 첫 번째 코드가 들어갈 위치 -->
+
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f9f9f9; }
-        .product { background: white; display: inline-block; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        button { background-color: #ff4757; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; }
-        button:hover { background-color: #ff6b81; }
-    </style>
-</head>
-<body>
-
-    <div class="product">
-        <h2>🔥 특가 상품: 무선 블루투스 이어폰</h2>
-        <p>가격: 59,000원</p>
-        <button id="buyButton">장바구니 담기 / 구매하기</button>
-    </div>
-
-</body>
-</html>
+        body { font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { color: #212529; margin-bottom: 10px; }
+        .subtitle { color: #6c757d; font-size: 16px; }
+        
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 25px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        
+        .product-card { 
+            background: white; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        .product-img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+        }
+        
+        .product-info { padding: 20px; text-align: left; }
+        .product-title { font-size: 18px; font-weight: bold; margin: 0 0 10px 0; color: #333; }
+        .product-price { font-size: 16px; color: #e63946; font-weight: bold; margin-bottom: 15px; }
+        
+        .btn-group { display: flex; gap: 8px; }
+        .btn { 
+            flex: 1; 
+            padding: 10px 0; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            
