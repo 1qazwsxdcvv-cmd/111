@@ -51,4 +51,62 @@
             font-size: 14px; 
             font-weight: bold; 
             cursor: pointer; 
-            
+            text-align: center;
+        }
+        .btn-cart { background-color: #4a90e2; color: white; }
+        .btn-cart:hover { background-color: #357abd; }
+        .btn-buy { background-color: #2ec4b6; color: white; }
+        .btn-buy:hover { background-color: #219a8f; }
+    </style>
+</head>
+<body>
+    <!-- 구글 태그 관리자 (GTM) 두 번째 코드가 들어갈 위치 -->
+
+    <header>
+        <h1>🛍️ 테크 가전 쇼핑몰</h1>
+        <p class="subtitle">구글 태그 관리자(GTM) 이커머스 태그 수집 실습용 사이트</p>
+    </header>
+
+    <main class="product-grid">
+        <!-- 상품 1 -->
+        <div class="product-card" id="product-1">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" alt="무선 헤드폰" class="product-img">
+            <div class="product-info">
+                <div class="product-title">프리미엄 무선 헤드폰</div>
+                <div class="product-price">129,000원</div>
+                <div class="btn-group">
+                    <button class="btn btn-cart" id="add-to-cart-1" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
+                    <button class="btn btn-buy" id="buy-now-1" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품 2 -->
+        <div class="product-card" id="product-2">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" alt="스마트 워치" class="product-img">
+            <div class="product-info">
+                <div class="product-title">스마트 워치 시리즈 5</div>
+                <div class="product-price">249,000원</div>
+                <div class="btn-group">
+                    <button class="btn btn-cart" id="add-to-cart-2" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
+                    <button class="btn btn-buy" id="buy-now-2" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품 3 -->
+        <div class="product-card" id="product-3">
+            <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80" alt="슬림 노트북" class="product-img">
+            <div class="product-info">
+                <div class="product-title">울트라 슬림 노트북 15인치</div>
+                <div class="product-price">890,000원</div>
+                <div class="btn-group">
+                    <button class="btn btn-cart" id="add-to-cart-3" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
+                    <button class="btn btn-buy" id="buy-now-3" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
