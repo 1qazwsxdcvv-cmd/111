@@ -1,120 +1,94 @@
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MG26ZXXB');</script>
-<!-- End Google Tag Manager -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MG26ZXXB');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가상 쇼핑몰 실습 사이트</title>
-    <!-- 구글 태그 관리자 (GTM) 첫 번째 코드가 들어갈 위치 -->
-
+    <title>가상 실습 쇼핑몰</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; }
-        header { text-align: center; margin-bottom: 40px; }
-        h1 { color: #212529; margin-bottom: 10px; }
-        .subtitle { color: #6c757d; font-size: 16px; }
-        
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 25px; 
-            max-width: 1000px; 
-            margin: 0 auto; 
-        }
-        
-        .product-card { 
-            background: white; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-card:hover { transform: translateY(-5px); }
-        
-        .product-img { 
-            width: 100%; 
-            height: 200px; 
-            object-fit: cover; 
-        }
-        
-        .product-info { padding: 20px; text-align: left; }
-        .product-title { font-size: 18px; font-weight: bold; margin: 0 0 10px 0; color: #333; }
-        .product-price { font-size: 16px; color: #e63946; font-weight: bold; margin-bottom: 15px; }
-        
-        .btn-group { display: flex; gap: 8px; }
-        .btn { 
-            flex: 1; 
-            padding: 10px 0; 
-            border: none; 
-            border-radius: 6px; 
-            font-size: 14px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-align: center;
-        }
-        .btn-cart { background-color: #4a90e2; color: white; }
-        .btn-cart:hover { background-color: #357abd; }
-        .btn-buy { background-color: #2ec4b6; color: white; }
-        .btn-buy:hover { background-color: #219a8f; }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        .product-list { display: flex; gap: 20px; flex-wrap: wrap; }
+        .product-card { border: 1px solid #ddd; background: white; padding: 15px; border-radius: 8px; width: 200px; text-align: center; }
+        .product-card button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .product-card button:hover { background-color: #0056b3; }
+        #cart-section { margin-top: 30px; padding: 15px; background: white; border: 1px solid #ccc; border-radius: 8px; }
+        #cart-items { list-style: none; padding: 0; }
+        #cart-items li { padding: 5px 0; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
-</html>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG26ZXXB"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG26ZXXB"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <header>
-        <h1>🛍️ 테크 가전 쇼핑몰</h1>
-        <p class="subtitle">구글 태그 관리자(GTM) 이커머스 태그 수집 실습용 사이트</p>
+        <h1>🛒 GA4 실습용 가상 쇼핑몰</h1>
+        <p>상품을 장바구니에 담고 이벤트를 측정해보세요!</p>
     </header>
 
-    <main class="product-grid">
-        <!-- 상품 1 -->
-        <div class="product-card" id="product-1">
-            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" alt="무선 헤드폰" class="product-img">
-            <div class="product-info">
-                <div class="product-title">프리미엄 무선 헤드폰</div>
-                <div class="product-price">129,000원</div>
-                <div class="btn-group">
-                    <button class="btn btn-cart" id="add-to-cart-1" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
-                    <button class="btn btn-buy" id="buy-now-1" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
-                </div>
+    <main>
+        <h2>추천 상품 목록</h2>
+        <div class="product-list">
+            <div class="product-card">
+                <h3>무선 마우스</h3>
+                <p>가격: 25,000원</p>
+                <button class="add-to-cart" data-name="무선 마우스" data-price="25000">장바구니 담기</button>
+            </div>
+            <div class="product-card">
+                <h3>기계식 키보드</h3>
+                <p>가격: 89,000원</p>
+                <button class="add-to-cart" data-name="기계식 키보드" data-price="89000">장바구니 담기</button>
+            </div>
+            <div class="product-card">
+                <h3>27인치 모니터</h3>
+                <p>가격: 199,000원</p>
+                <button class="add-to-cart" data-name="27인치 모니터" data-price="199000">장바구니 담기</button>
             </div>
         </div>
 
-        <!-- 상품 2 -->
-        <div class="product-card" id="product-2">
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" alt="스마트 워치" class="product-img">
-            <div class="product-info">
-                <div class="product-title">스마트 워치 시리즈 5</div>
-                <div class="product-price">249,000원</div>
-                <div class="btn-group">
-                    <button class="btn btn-cart" id="add-to-cart-2" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
-                    <button class="btn btn-buy" id="buy-now-2" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 상품 3 -->
-        <div class="product-card" id="product-3">
-            <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80" alt="슬림 노트북" class="product-img">
-            <div class="product-info">
-                <div class="product-title">울트라 슬림 노트북 15인치</div>
-                <div class="product-price">890,000원</div>
-                <div class="btn-group">
-                    <button class="btn btn-cart" id="add-to-cart-3" onclick="alert('장바구니에 추가되었습니다!')">장바구니 담기</button>
-                    <button class="btn btn-buy" id="buy-now-3" onclick="alert('바로 구매 페이지로 이동합니다.')">구매하기</button>
-                </div>
-            </div>
-        </div>
+        <section id="cart-section">
+            <h2>🛒 내 장바구니 목록 (<span id="cart-count">0</span>개)</h2>
+            <ul id="cart-items">
+                <li>장바구니가 비어 있습니다.</li>
+            </ul>
+        </section>
     </main>
+
+    <script>
+        let cart = [];
+        const buttons = document.querySelectorAll('.add-to-cart');
+        const cartItemsList = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const price = this.getAttribute('data-price');
+                
+                cart.push({ name, price });
+                updateCartUI();
+            });
+        });
+
+        function updateCartUI() {
+            cartCount.textContent = cart.length;
+            cartItemsList.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${item.name} - ${parseInt(item.price).toLocaleString()}원`;
+                cartItemsList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
