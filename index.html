@@ -13,15 +13,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가상 실습 쇼핑몰</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
-        header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .product-list { display: flex; gap: 20px; flex-wrap: wrap; }
-        .product-card { border: 1px solid #ddd; background: white; padding: 15px; border-radius: 8px; width: 200px; text-align: center; }
-        .product-card button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .product-card button:hover { background-color: #0056b3; }
-        #cart-section { margin-top: 30px; padding: 15px; background: white; border: 1px solid #ccc; border-radius: 8px; }
-        #cart-items { list-style: none; padding: 0; }
-        #cart-items li { padding: 5px 0; border-bottom: 1px solid #eee; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; color: #333; padding-bottom: 50px; }
+        
+        /* 헤더 & 우측 상단 장바구니 버튼 */
+        header { background: #ffffff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+        header h1 { font-size: 22px; color: #1a1a1a; }
+        .cart-icon-btn { position: relative; background: #007bff; color: white; border: none; padding: 10px 18px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .cart-icon-btn:hover { background: #0056b3; }
+        .cart-badge { background: #ff4d4f; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; }
+
+        /* 메인 상품 영역 */
+        container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: block; }
+        .section-title { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .product-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .product-card .price { font-size: 16px; font-weight: bold; color: #007bff; margin-bottom: 15px; }
+        .btn-add-cart { background: #28a745; color: white; border: none; padding: 10px 0; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add-cart:hover { background: #218838; }
+
+        /* 장바구니 모달 창 (우측 상단 클릭 시 표시) */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: flex-end; }
+        .cart-modal { background: white; width: 380px; height: 100%; padding: 30px 20px; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.1); animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        
+        .cart-modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .cart-modal-header h2 { font-size: 20px; }
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #888; }
+        
+        .cart-item-list { list-style: none; overflow-y: auto; flex-grow: 1; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+        .cart-item-info h4 { font-size: 15px; margin-bottom: 4px; }
+        .cart-item-info p { font-size: 14px; color: #666; }
+        .btn-remove { background: #ff4d4f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-remove:hover { background: #d9363e; }
+        
+        .cart-modal-footer { border-top: 2px solid #eee; padding-top: 20px; margin-top: 15px; }
+        .total-price { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
+        .empty-msg { text-align: center; color: #999; margin-top: 40px; }
     </style>
 </head>
 <body>
@@ -31,63 +64,118 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <header>
-        <h1>🛒 GA4 실습용 가상 쇼핑몰</h1>
-        <p>상품을 장바구니에 담고 이벤트를 측정해보세요!</p>
+        <h1>🛍️ GA4 실습 가상 쇼핑몰</h1>
+        <button class="cart-icon-btn" id="open-cart-btn">
+            🛒 장바구니 <span class="cart-badge" id="cart-count">0</span>
+        </button>
     </header>
 
-    <main>
-        <h2>추천 상품 목록</h2>
-        <div class="product-list">
+    <container>
+        <h2 class="section-title">추천 상품</h2>
+        <div class="product-grid">
             <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300" alt="무선 마우스" class="product-img">
                 <h3>무선 마우스</h3>
-                <p>가격: 25,000원</p>
-                <button class="add-to-cart" data-name="무선 마우스" data-price="25000">장바구니 담기</button>
+                <p class="price">25,000원</p>
+                <button class="btn-add-cart" data-name="무선 마우스" data-price="25000">장바구니 담기</button>
             </div>
             <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300" alt="기계식 키보드" class="product-img">
                 <h3>기계식 키보드</h3>
-                <p>가격: 89,000원</p>
-                <button class="add-to-cart" data-name="기계식 키보드" data-price="89000">장바구니 담기</button>
+                <p class="price">89,000원</p>
+                <button class="btn-add-cart" data-name="기계식 키보드" data-price="89000">장바구니 담기</button>
             </div>
             <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=300" alt="27인치 모니터" class="product-img">
                 <h3>27인치 모니터</h3>
-                <p>가격: 199,000원</p>
-                <button class="add-to-cart" data-name="27인치 모니터" data-price="199000">장바구니 담기</button>
+                <p class="price">199,000원</p>
+                <button class="btn-add-cart" data-name="27인치 모니터" data-price="199000">장바구니 담기</button>
             </div>
         </div>
+    </container>
 
-        <section id="cart-section">
-            <h2>🛒 내 장바구니 목록 (<span id="cart-count">0</span>개)</h2>
-            <ul id="cart-items">
-                <li>장바구니가 비어 있습니다.</li>
+    <!-- 장바구니 사이드 모달 창 -->
+    <div class="modal-overlay" id="cart-modal-overlay">
+        <div class="cart-modal">
+            <div class="cart-modal-header">
+                <h2>🛒 내 장바구니</h2>
+                <button class="close-btn" id="close-cart-btn">&times;</button>
+            </div>
+            <ul class="cart-item-list" id="cart-item-list">
+                <p class="empty-msg">장바구니가 비어 있습니다.</p>
             </ul>
-        </section>
-    </main>
+            <div class="cart-modal-footer">
+                <div class="total-price">
+                    <span>총 결제금액:</span>
+                    <span id="cart-total-price">0원</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         let cart = [];
-        const buttons = document.querySelectorAll('.add-to-cart');
-        const cartItemsList = document.getElementById('cart-items');
-        const cartCount = document.getElementById('cart-count');
 
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
+        const openCartBtn = document.getElementById('open-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartModalOverlay = document.getElementById('cart-modal-overlay');
+        const cartItemList = document.getElementById('cart-item-list');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const addToCartBtns = document.querySelectorAll('.btn-add-cart');
+
+        // 장바구니 열기 / 닫기
+        openCartBtn.addEventListener('click', () => cartModalOverlay.style.display = 'flex');
+        closeCartBtn.addEventListener('click', () => cartModalOverlay.style.display = 'none');
+        cartModalOverlay.addEventListener('click', (e) => {
+            if (e.target === cartModalOverlay) cartModalOverlay.style.display = 'none';
+        });
+
+        // 장바구니 담기
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
                 const name = this.getAttribute('data-name');
-                const price = this.getAttribute('data-price');
+                const price = parseInt(this.getAttribute('data-price'));
                 
-                cart.push({ name, price });
-                updateCartUI();
+                cart.push({ id: Date.now(), name, price });
+                updateCart();
+                cartModalOverlay.style.display = 'flex'; // 담으면 바로 장바구니 열림
             });
         });
 
-        function updateCartUI() {
+        // 상품 삭제
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        // 장바구니 UI 업데이트
+        function updateCart() {
             cartCount.textContent = cart.length;
-            cartItemsList.innerHTML = '';
-            
-            cart.forEach((item, index) => {
+            cartItemList.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemList.innerHTML = '<p class="empty-msg">장바구니가 비어 있습니다.</p>';
+                cartTotalPrice.textContent = '0원';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
                 const li = document.createElement('li');
-                li.textContent = `${index + 1}. ${item.name} - ${parseInt(item.price).toLocaleString()}원`;
-                cartItemsList.appendChild(li);
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.price.toLocaleString()}원</p>
+                    </div>
+                    <button class="btn-remove" onclick="removeFromCart(${item.id})">삭제</button>
+                `;
+                cartItemList.appendChild(li);
             });
+
+            cartTotalPrice.textContent = `${total.toLocaleString()}원`;
         }
     </script>
 </body>
