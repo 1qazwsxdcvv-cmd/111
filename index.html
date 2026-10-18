@@ -9,25 +9,30 @@
     })(window,document,'script','dataLayer','GTM-MG26ZXXB');</script>
     <!-- End Google Tag Manager -->
 
+    <!-- GA4 Direct Tracking Tag (G-JRZ72QQ462) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRZ72QQ462"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JRZ72QQ462');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가상 실습 쇼핑몰</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; color: #333; padding-bottom: 50px; }
-        
-        /* 헤더 & 우측 상단 장바구니 버튼 */
         header { background: #ffffff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
         header h1 { font-size: 22px; color: #1a1a1a; }
         .cart-icon-btn { position: relative; background: #007bff; color: white; border: none; padding: 10px 18px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .cart-icon-btn:hover { background: #0056b3; }
         .cart-badge { background: #ff4d4f; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; }
 
-        /* 메인 상품 영역 */
         container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: block; }
         .section-title { font-size: 20px; margin-bottom: 20px; font-weight: 600; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
-        
         .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
         .product-card:hover { transform: translateY(-5px); }
         .product-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
@@ -36,22 +41,18 @@
         .btn-add-cart { background: #28a745; color: white; border: none; padding: 10px 0; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-add-cart:hover { background: #218838; }
 
-        /* 장바구니 모달 창 (우측 상단 클릭 시 표시) */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: flex-end; }
         .cart-modal { background: white; width: 380px; height: 100%; padding: 30px 20px; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.1); animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        
         .cart-modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
         .cart-modal-header h2 { font-size: 20px; }
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #888; }
-        
         .cart-item-list { list-style: none; overflow-y: auto; flex-grow: 1; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
         .cart-item-info h4 { font-size: 15px; margin-bottom: 4px; }
         .cart-item-info p { font-size: 14px; color: #666; }
         .btn-remove { background: #ff4d4f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .btn-remove:hover { background: #d9363e; }
-        
         .cart-modal-footer { border-top: 2px solid #eee; padding-top: 20px; margin-top: 15px; }
         .total-price { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
         .empty-msg { text-align: center; color: #999; margin-top: 40px; }
@@ -61,7 +62,6 @@
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG26ZXXB"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
     <header>
         <h1>🛍️ GA4 실습 가상 쇼핑몰</h1>
@@ -94,7 +94,6 @@
         </div>
     </container>
 
-    <!-- 장바구니 사이드 모달 창 -->
     <div class="modal-overlay" id="cart-modal-overlay">
         <div class="cart-modal">
             <div class="cart-modal-header">
@@ -124,32 +123,49 @@
         const cartTotalPrice = document.getElementById('cart-total-price');
         const addToCartBtns = document.querySelectorAll('.btn-add-cart');
 
-        // 장바구니 열기 / 닫기
         openCartBtn.addEventListener('click', () => cartModalOverlay.style.display = 'flex');
         closeCartBtn.addEventListener('click', () => cartModalOverlay.style.display = 'none');
         cartModalOverlay.addEventListener('click', (e) => {
             if (e.target === cartModalOverlay) cartModalOverlay.style.display = 'none';
         });
 
-        // 장바구니 담기
+        // 장바구니 담기 + GA4 & GTM 데이터 발송
         addToCartBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const name = this.getAttribute('data-name');
                 const price = parseInt(this.getAttribute('data-price'));
+                const itemId = Date.now();
                 
-                cart.push({ id: Date.now(), name, price });
+                cart.push({ id: itemId, name, price });
                 updateCart();
-                cartModalOverlay.style.display = 'flex'; // 담으면 바로 장바구니 열림
+                cartModalOverlay.style.display = 'flex';
+
+                // GA4 및 GTM으로 이벤트 강제 송신
+                if (typeof gtag === 'function') {
+                    gtag('event', 'add_to_cart', {
+                        currency: 'KRW',
+                        value: price,
+                        items: [{ item_name: name, price: price }]
+                    });
+                }
             });
         });
 
-        // 상품 삭제
+        // 상품 삭제 + GA4 & GTM 데이터 발송
         function removeFromCart(id) {
+            const removedItem = cart.find(item => item.id === id);
             cart = cart.filter(item => item.id !== id);
             updateCart();
+
+            if (removedItem && typeof gtag === 'function') {
+                gtag('event', 'remove_from_cart', {
+                    currency: 'KRW',
+                    value: removedItem.price,
+                    items: [{ item_name: removedItem.name, price: removedItem.price }]
+                });
+            }
         }
 
-        // 장바구니 UI 업데이트
         function updateCart() {
             cartCount.textContent = cart.length;
             cartItemList.innerHTML = '';
